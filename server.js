@@ -102,13 +102,6 @@ app.post('/login', (req, res) => {
       });
 });
 
-// Subir archivos
-app.post('/subir', upload.single('file'), (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No se ha subido ningún archivo' });
-    }
-    res.json({ message: 'Archivo subido correctamente', file: req.file });
-});
 
 // Obtener todos los coches (protegido por JWT)
 app.get("/coches", verifyToken, (req, res) => {
