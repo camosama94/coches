@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="email">Email</label><br>
+        <input type="text" name="email" id="email" required><br>
+        <label for="password">Contraseña</label><br>
+        <input type="password" name="password" id="password" required><br>
+        <input type="submit" name="enviar" id="enviar" value="Iniciar sesión">        
+    </form>
+
+    <a href="/registro.html">Registrar Usuario</a>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    const token = data.token;
+    
+                    // Guardar el token en el localStorage
+                    localStorage.setItem('token', token);
+    
+                    // Hacer una solicitud fetch a /index con el token
+                    const indexResponse = await fetch('/index', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+
+                    // Si la respuesta es exitosa, redirige a la página coches.html
+                    if (indexResponse.ok) {
+                        window.location.href = '/coches.html'; // Ahora se redirige correctamente
+                    } else {
+                        const errorData = await indexResponse.json();
+                        document.getElementById('mensaje').innerText = 'Error al acceder a la página de coches: ' + errorData.message;
+                    }
+                } else {
+                    const errorData = await response.json();
+                    document.getElementById('mensaje').innerText = 'Login failed: ' + errorData.message;
+                }
+            } catch (error) {
+                document.getElementById('mensaje').innerText = 'Login failed: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar Coche</title>
+</head>
+<body>
+    <h1>Insertar Coche</h1>
+    <p>Marca: <input type="text" name="marca" id="marca"></p>
+    <p>Modelo: <input type="text" name="modelo" id="modelo"></p>
+    <p>Año: <input type="text" name="anno" id="anno"></p>
+    <p>Precio: <input type="text" name="precio" id="precio"></p>
+    <button id="btn-insertar">Insertar</button>
+    <button id="btn-volver">Volver</button>
+    
+    <script>
+        const insertarCoche = () => {
+            let marca = document.getElementById("marca").value;
+            let modelo = document.getElementById("modelo").value;
+            let anno = document.getElementById("anno").value;
+            let precio = document.getElementById("precio").value;
+
+            const token = localStorage.getItem('token');
+
+            fetch('/coches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                    
+                },
+                body: JSON.stringify({ marca, modelo, anno, precio })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Coche insertado");
+                } else {
+                    alert("No se insertó el coche");
+                }
+            })
+            .catch(err => {
+                alert("Error al insertar el coche: " + err);
+            });
+        };
+
+        document.getElementById("btn-insertar").addEventListener("click", insertarCoche);
+
+        const volver = async () => {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const indexResponse = await fetch('/index', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                // Si la respuesta es exitosa, redirige a la página coches.html
+                if (indexResponse.ok) {
+                    window.location.href = '/coches.html'; // Redirigir correctamente
+                } else {
+                    const errorData = await indexResponse.json();
+                    document.getElementById('mensaje').innerText = 'Error al acceder a la página de coches: ' + errorData.message;
+                }
+            } catch (err) {
+                alert("Error al acceder a la página de coches: " + err);
+            }
+        };
+
+        document.getElementById("btn-volver").addEventListener("click", volver);
+    </script>
+</body>
+</html>

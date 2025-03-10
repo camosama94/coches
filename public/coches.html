@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concesionario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Coches</h1>
+    <hr>
+    <table id="tablaProducto" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Generado dinámicamente-->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <!-- Aquí puedes incluir el botón sin el enlace -->
+              <button onclick="window.location.href='/insertar.html'">Crear Coche</button>
+            </td>
+          </tr>
+        </tfoot>
+    </table>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem('token'); // Asumiendo que guardas el token en el localStorage
+
+  if (!token) {
+    alert("No estás autenticado. Por favor, inicia sesión.");
+    return;
+  }
+
+  fetch("/coches", {
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + token // Aquí se envía el token con "Bearer"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const table = document.getElementById("tablaProducto");
+    const tbody = table.querySelector("tbody");
+    tbody.innerHTML = ''; // Limpiar la tabla
+    for (coche of data) {
+      const fila = document.createElement("tr");
+      fila.id = coche._id;
+      fila.innerHTML = `
+        <td>${coche._id}</td>
+        <td>${coche.marca}</td>
+        <td>${coche.modelo}</td>
+        <td>${coche.anno}</td>
+        <td>${coche.precio}</td>
+        <td><button onclick="eliminarCoche('${coche._id}')">Borrar coche</button><button onclick="window.location.href='actualiza.html?id=${coche._id}'">ActualizarCoche</button></td>
+        `;
+      tbody.appendChild(fila);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+function eliminarCoche(id) {
+  const token = localStorage.getItem('token'); // Obtener el token
+
+  fetch('/coches/' + id, {
+    method: 'DELETE',
+    headers: {
+      "Authorization": "Bearer " + token // Aquí también pasamos el token
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      document.getElementById(id).remove();
+      alert("Coche borrado correctamente");
+    } else {
+      alert("Error al eliminar el coche");
+    }
+  })
+  .catch(err => {
+    alert(err);
+  });
+}
+
+</script>
+
+</html>
