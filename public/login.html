@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
     <form id="loginForm">
@@ -11,10 +12,11 @@
         <input type="text" name="email" id="email" required><br>
         <label for="password">Contraseña</label><br>
         <input type="password" name="password" id="password" required><br>
-        <input type="submit" name="enviar" id="enviar" value="Iniciar sesión">        
+        <input type="submit" name="enviar" id="enviar" value="Iniciar sesión"><br>
+        <a href="/registro.html" style="display: block; text-align: center;">Registrar Usuario</a>        
     </form>
 
-    <a href="/registro.html">Registrar Usuario</a>
+    
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (event) => {

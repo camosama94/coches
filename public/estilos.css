@@ -1,0 +1,155 @@
+/* Reset de márgenes y rellenos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Estilo para los formularios */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+input[type="submit"] {
+    display: block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 0 auto;
+}
+
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Estilos de enlaces */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo de mensajes */
+#mensaje {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#mensaje.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+#mensaje.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+/* Estilo de la cabecera */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los contenedores */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Estilo para tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* Estilo para botones */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.boton-accion {
+    display: inline-block;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 5px; /* Espacio entre botones */
+}
+
+.boton-accion:hover {
+    background-color: #d32f2f;
+}
